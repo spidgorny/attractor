@@ -5,8 +5,6 @@ import {CircleGenerator} from "./CircleGenerator";
 export class App {
 
 	c: CanvasPlus;
-	width: number;
-	height: number;
 	t: number = 1;
 	prevT: number;
 	pixels: Point[] = [];
@@ -21,16 +19,17 @@ export class App {
 	}
 
 	start() {
-		for (let i = 0; i < 10; i++) {
-			this.pixels.push(new Point(this.width, this.height));
+		for (let i = 0; i < 100; i++) {
+			this.pixels.push(new Point(this.c.width, this.c.height));
 		}
 	}
 
 	frame(canvas: CanvasPlus) {
+		const dt = this.t - this.prevT;
 		this.c.fade(5);
 		for (let p of this.pixels) {
 			p.draw(canvas);
-			p.next(this.t);
+			p.next(this.t, dt);
 		}
 		// let p = this.pixels[0];
 		this.debug.innerHTML = `t: ${this.t}<br />${this.circle}`;
@@ -47,7 +46,8 @@ export class App {
 		this.prevT = this.t;
 		this.t += 0.01;
 
-		setTimeout(this.loop.bind(this), 1);
+		// setTimeout(this.loop.bind(this), 1);
+		requestAnimationFrame(this.loop.bind(this));
 	}
 
 	click(e) {

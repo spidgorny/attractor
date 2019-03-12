@@ -10,8 +10,8 @@ export class CircleGenerator {
 	}
 
 	frame(t, dt) {
-		this.x = this.r * Math.sin(t*5);
-		this.y = this.r * Math.cos(t*5);
+		this.x = this.r * Math.sin(t*3);
+		this.y = this.r * Math.cos(t*3);
 	}
 
 	draw(canvas: CanvasPlus) {

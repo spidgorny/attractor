@@ -7,8 +7,8 @@ var CircleGenerator = /** @class */ (function () {
         this.r = 100;
     }
     CircleGenerator.prototype.frame = function (t, dt) {
-        this.x = this.r * Math.sin(t * 5);
-        this.y = this.r * Math.cos(t * 5);
+        this.x = this.r * Math.sin(t * 3);
+        this.y = this.r * Math.cos(t * 3);
     };
     CircleGenerator.prototype.draw = function (canvas) {
         canvas.setParticle(this.x, this.y, 255, 255, 0, 1);

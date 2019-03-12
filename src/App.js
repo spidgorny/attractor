@@ -13,16 +13,17 @@ var App = /** @class */ (function () {
         this.circle = new CircleGenerator_1.CircleGenerator();
     }
     App.prototype.start = function () {
-        for (var i = 0; i < 10; i++) {
-            this.pixels.push(new Point_1.Point(this.width, this.height));
+        for (var i = 0; i < 100; i++) {
+            this.pixels.push(new Point_1.Point(this.c.width, this.c.height));
         }
     };
     App.prototype.frame = function (canvas) {
+        var dt = this.t - this.prevT;
         this.c.fade(5);
         for (var _i = 0, _a = this.pixels; _i < _a.length; _i++) {
             var p = _a[_i];
             p.draw(canvas);
-            p.next(this.t);
+            p.next(this.t, dt);
         }
         // let p = this.pixels[0];
         this.debug.innerHTML = "t: " + this.t + "<br />" + this.circle;
@@ -35,7 +36,8 @@ var App = /** @class */ (function () {
         this.circle.frame(this.t, this.t - this.prevT);
         this.prevT = this.t;
         this.t += 0.01;
-        setTimeout(this.loop.bind(this), 1);
+        // setTimeout(this.loop.bind(this), 1);
+        requestAnimationFrame(this.loop.bind(this));
     };
     App.prototype.click = function (e) {
         //console.log(e);
