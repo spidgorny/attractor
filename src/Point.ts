@@ -1,3 +1,5 @@
+import {CanvasPlus} from "./CanvasPlus";
+
 export class Point {
 	width: number;
 	height: number;
@@ -28,6 +30,14 @@ export class Point {
 			x: x+t,
 			y: y+t,
 		};
+	}
+
+	draw(canvas: CanvasPlus) {
+		canvas.setParticle(
+			canvas.width/2+this.x,
+			canvas.height/2+this.y,
+			255, 255, 255, 1
+		);
 	}
 
 	next(t: number) {

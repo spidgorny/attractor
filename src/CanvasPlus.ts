@@ -3,7 +3,7 @@ export class CanvasPlus {
 	canvas: HTMLCanvasElement;
 	width: number;
 	height: number;
-	c;
+	c: CanvasRenderingContext2D;
 	imageData;
 
 	constructor() {
@@ -12,9 +12,13 @@ export class CanvasPlus {
 		this.height = this.canvas.height = this.canvas.clientHeight;
 		this.c = this.canvas.getContext('2d');
 
-		this.c.beginPath();
-		this.c.color = '000000';
+		this.c.fillStyle = '#000000';
 		this.c.fillRect(0, 0, this.width, this.height);
+
+		this.c.beginPath();
+		this.c.fillStyle = '#ffffff';
+		this.c.strokeStyle = '#ffffff';
+		this.c.arc(this.width/10, this.height/10, this.width/10, 0, 2*Math.PI);
 		this.c.stroke();
 	}
 
@@ -42,6 +46,25 @@ export class CanvasPlus {
 			b: this.imageData.data[index+2],
 			a: this.imageData.data[index+3],
 		}
+	}
+
+	fade(speed: number = 1) {
+		this.beforeFrame();
+		for (let x = 0; x < this.width; x++) {
+			for (let y = 0; y < this.height; y++) {
+				let {r, g, b, a} = this.getPixel(x, y);
+				this.setPixel(x, y, r-speed, g-speed, b-speed, a+1);
+			}
+		}
+		this.afterFrame();
+	}
+
+	setParticle(x, y, r, g, b, a) {
+		this.c.beginPath();
+		this.c.fillStyle = `rgba(${r},${g},${b},${a})`;
+		this.c.strokeStyle = `rgba(${r},${g},${b},${a})`;
+		this.c.arc(this.width/2+x, this.height/2+y, 3, 0, 2*Math.PI);
+		this.c.stroke();
 	}
 
 }
