@@ -1,0 +1,25 @@
+{
+  "name": "attractor",
+  "version": "1.0.0",
+  "description": "Inspired by \r https://www.youtube.com/watch?v=fDSIRXmnVvk&list=LLbupuN9hGWstuQUazSgcAQQ&index=5",
+  "main": "src/attractor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spidgorny/attractor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spidgorny/attractor/issues"
+  },
+  "homepage": "https://github.com/spidgorny/attractor#readme",
+  "devDependencies": {
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  }
+}
