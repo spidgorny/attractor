@@ -16,7 +16,7 @@ var Point = /** @class */ (function () {
         this.b = 128 + Math.random() * 128;
     };
     Point.prototype.draw = function (canvas) {
-        var zoom = 10;
+        var zoom = 5;
         canvas.setParticle(this.x / (10 / this.z) * zoom, this.y / (10 / this.z) * zoom, this.r, this.g, this.b, 1);
     };
     Point.prototype.next = function (t, dt) {

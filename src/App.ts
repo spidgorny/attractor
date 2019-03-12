@@ -15,33 +15,34 @@ export class App {
 		this.c = new CanvasPlus();
 		this.c.canvas.addEventListener('click', this.click.bind(this));
 		this.debug = document.querySelector('div#debug');
-		this.circle = new CircleGenerator();
+		// this.circle = new CircleGenerator();
 	}
 
 	start() {
-		for (let i = 0; i < 100; i++) {
+		for (let i = 0; i < 1000; i++) {
 			this.pixels.push(new Point(this.c.width, this.c.height));
 		}
 	}
 
 	frame(canvas: CanvasPlus) {
 		const dt = this.t - this.prevT;
-		this.c.fade(5);
+		// this.c.fade(5);
 		for (let p of this.pixels) {
 			p.draw(canvas);
 			p.next(this.t, dt);
 		}
 		// let p = this.pixels[0];
-		this.debug.innerHTML = `t: ${this.t}<br />${this.circle}`;
+		// this.debug.innerHTML = `t: ${this.t}<br />${this.circle}`;
 	}
 
 	loop() {
 		// this.c.beforeFrame();
+		this.c.reset();
 		this.frame(this.c);
-		this.circle.draw(this.c);
+		// this.circle.draw(this.c);
 		// this.c.afterFrame();
 
-		this.circle.frame(this.t, this.t - this.prevT);
+		// this.circle.frame(this.t, this.t - this.prevT);
 
 		this.prevT = this.t;
 		this.t += 0.01;

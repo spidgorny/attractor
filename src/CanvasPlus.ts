@@ -11,10 +11,15 @@ export class CanvasPlus {
 		this.width = this.canvas.width = this.canvas.clientWidth;
 		this.height = this.canvas.height = this.canvas.clientHeight;
 		this.c = this.canvas.getContext('2d');
+		this.reset();
+	}
 
+	reset() {
 		this.c.fillStyle = '#000000';
 		this.c.fillRect(0, 0, this.width, this.height);
+	}
 
+	drawTestCircle() {
 		this.c.beginPath();
 		this.c.fillStyle = '#ffffff';
 		this.c.strokeStyle = '#ffffff';

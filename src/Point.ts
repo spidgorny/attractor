@@ -30,7 +30,7 @@ export class Point {
 	}
 
 	draw(canvas: CanvasPlus) {
-		const zoom = 10;
+		const zoom = 5;
 		canvas.setParticle(
 			this.x/(10/this.z)*zoom,
 			this.y/(10/this.z)*zoom,

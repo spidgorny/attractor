@@ -6,14 +6,19 @@ var CanvasPlus = /** @class */ (function () {
         this.width = this.canvas.width = this.canvas.clientWidth;
         this.height = this.canvas.height = this.canvas.clientHeight;
         this.c = this.canvas.getContext('2d');
+        this.reset();
+    }
+    CanvasPlus.prototype.reset = function () {
         this.c.fillStyle = '#000000';
         this.c.fillRect(0, 0, this.width, this.height);
+    };
+    CanvasPlus.prototype.drawTestCircle = function () {
         this.c.beginPath();
         this.c.fillStyle = '#ffffff';
         this.c.strokeStyle = '#ffffff';
         this.c.arc(this.width / 10, this.height / 10, this.width / 10, 0, 2 * Math.PI);
         this.c.stroke();
-    }
+    };
     CanvasPlus.prototype.beforeFrame = function () {
         this.imageData = this.c.getImageData(0, 0, this.width, this.height);
     };
