@@ -9,6 +9,7 @@ var Gravity = /** @class */ (function () {
         this.canvas = new CanvasPlus_1.CanvasPlus();
         this.swarm = new Swarm_1.Swarm(this.canvas);
         this.time = 0;
+        this.canvas.canvas.addEventListener('click', this.click.bind(this));
     }
     Gravity.prototype.start = function () {
         this.frameDone = performance.now();
@@ -22,6 +23,9 @@ var Gravity = /** @class */ (function () {
         this.swarm.next(this.time, dt);
         requestAnimationFrame(this.loop.bind(this));
         this.frameDone = performance.now();
+    };
+    Gravity.prototype.click = function (e) {
+        this.swarm.addPlanet(e.clientX - this.canvas.width / 2, e.clientY - this.canvas.height / 2);
     };
     return Gravity;
 }());

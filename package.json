@@ -4,6 +4,7 @@
   "description": "Inspired by \r https://www.youtube.com/watch?v=fDSIRXmnVvk&list=LLbupuN9hGWstuQUazSgcAQQ&index=5",
   "main": "src/attractor.js",
   "scripts": {
+    "start": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

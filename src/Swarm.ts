@@ -1,30 +1,43 @@
 import {Point} from "./Point";
 import {CanvasPlus} from "./CanvasPlus";
+import {Vector2D} from "./Vector2D";
 
 export class Swarm {
 
     pixels: Point[] = [];
     start: number;
-    setSize = 1;
+    setSize = 50;
 
     planets: Point[] = [];
 
     constructor(protected canvas: CanvasPlus) {
-        const p1 = new Point(this.canvas.width/2, this.canvas.height/2);
+        let range = Math.min(this.canvas.width, this.canvas.height) / 10 * 8;
+        for (let i = 0; i < 3; i++) {
+            this.addPlanet(Math.random() * range - range/2, Math.random() * range - range/2);
+        }
+    }
+
+    addPlanet(x, y) {
+        const p1 = new Point(this.canvas.width, this.canvas.height);
+        p1.x = x;
+        p1.y = y;
         p1.radius = 10;
-        console.log(p1);
+        p1.speed = new Vector2D(0, 0);
         this.planets.push(p1);
     }
 
     add(amount: number) {
         for (let i = 0; i < amount; i++) {
-            this.pixels.push(new Point(this.canvas.width, this.canvas.height));
+            let point = new Point(this.canvas.width, this.canvas.height);
+            const force = Math.random() * 10;
+            point.speed = new Vector2D((Math.random()-0.5) * force, (Math.random()-0.5) * force);
+            this.pixels.push(point);
         }
     }
 
     remove(amount: number) {
         for (let i = 0; i < amount; i++) {
-            this.pixels.pop();
+            this.pixels.shift();
         }
     }
 
@@ -40,21 +53,56 @@ export class Swarm {
 
     next(t, dt) {
         for (let p of this.pixels) {
+            // for (let g of this.pixels) {
+            //     if (p == g) continue;
+            //     p.affectedBy(g);
+            // }
             for (let g of this.planets) {
-                const distance = p.distanceTo(g);
-                const cross = p.vector.direction(g.vector);
-                p.nudge(cross.scale(0.001/Math.sqrt(distance)));
+                const distance = p.affectedBy(g, 1);
+                if (distance < 10) {
+                    // fall to the planet
+                    p.init();
+                }
+                // wind
+                // p.nudge(new Vector2D(1, 1).scale(0.01));
+                p.applySpeed(dt / 1000);
             }
-            p.applySpeed(dt/1000);
+            if (p.speed.length > 2) {
+                p.speed.scale(0.9);    // slow down
+            }
         }
 
+        // planets affecting each other
+        for (let g of this.planets) {
+            for (let g2 of this.planets) {
+                if (g == g2) {
+                    continue;
+                }
+                g.affectedBy(g2, 10);
+            }
+            g.applySpeed(dt / 10000);
+        }
+
+        for (let gIndex in this.planets) {
+            const g = this.planets[gIndex];
+            const xFar = Math.abs(g.x) > this.canvas.width * 2;
+            const yFar = Math.abs(g.y) > this.canvas.height * 2;
+            if (xFar || yFar) {
+                this.planets.splice(gIndex, 1);
+            }
+        }
+
+        this.adjustSwarmSize();
+    }
+
+    adjustSwarmSize() {
         const dur = performance.now() - this.start;
-        if (dur < 12) {
-            this.add(this.setSize *= 1.01);
+        if (dur < 10) {
+            this.add(this.setSize *= 0.95);
         }
         if (dur > 16) {
             this.remove(10);
-            // this.setSize /= 2;
+            this.setSize /= 2;
         }
     }
 

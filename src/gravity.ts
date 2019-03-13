@@ -15,6 +15,7 @@ class Gravity {
         this.canvas = new CanvasPlus();
         this.swarm = new Swarm(this.canvas);
         this.time = 0;
+        this.canvas.canvas.addEventListener('click', this.click.bind(this));
     }
 
     start() {
@@ -31,6 +32,10 @@ class Gravity {
 
         requestAnimationFrame(this.loop.bind(this));
         this.frameDone = performance.now();
+    }
+
+    click(e) {
+        this.swarm.addPlanet(e.clientX - this.canvas.width/2, e.clientY - this.canvas.height/2);
     }
 
 }

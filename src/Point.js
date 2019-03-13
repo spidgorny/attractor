@@ -19,6 +19,9 @@ var Point = /** @class */ (function () {
         this.b = 128 + Math.random() * 128;
     };
     Point.prototype.draw = function (canvas) {
+        canvas.setParticle(this.x, this.y, this.r, this.g, this.b, 1, this.radius);
+    };
+    Point.prototype.draw3D = function (canvas) {
         var zoom = 1;
         canvas.setParticle(this.x / (10 / this.z) * zoom, this.y / (10 / this.z) * zoom, this.r, this.g, this.b, 1, this.radius);
     };
@@ -77,7 +80,7 @@ var Point = /** @class */ (function () {
         configurable: true
     });
     Point.prototype.distanceTo = function (p2) {
-        return Math.sqrt((this.x - p2.x) + (this.y + p2.y));
+        return Math.sqrt(Math.pow(this.x - p2.x, 2) + Math.pow(this.y - p2.y, 2));
     };
     Point.prototype.nudge = function (v) {
         this.speed = this.speed.add(v);
@@ -86,6 +89,18 @@ var Point = /** @class */ (function () {
         var n = this.vector.add(this.speed.scale(dt));
         this.x = n.x;
         this.y = n.y;
+    };
+    Point.prototype.affectedBy = function (g, gravity) {
+        if (gravity === void 0) { gravity = 1; }
+        var distance = this.distanceTo(g);
+        var cross = this.vector.direction(g.vector);
+        // p.nudge(cross.scale(1));
+        // don't fly too fast
+        if (distance < g.radius) {
+            distance /= 10;
+        }
+        this.nudge(cross.unit.scale(gravity / Math.sqrt(distance)));
+        return distance;
     };
     return Point;
 }());

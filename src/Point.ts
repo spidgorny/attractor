@@ -38,6 +38,15 @@ export class Point {
 	}
 
 	draw(canvas: CanvasPlus) {
+		canvas.setParticle(
+			this.x,
+			this.y,
+			this.r, this.g, this.b, 1,
+			this.radius
+		);
+	}
+
+	draw3D(canvas: CanvasPlus) {
 		const zoom = 1;
 		canvas.setParticle(
 			this.x/(10/this.z)*zoom,
@@ -103,7 +112,7 @@ export class Point {
 	}
 
 	distanceTo(p2: Point) {
-		return Math.sqrt((this.x - p2.x) + (this.y + p2.y));
+		return Math.sqrt(Math.pow(this.x - p2.x, 2) + Math.pow(this.y - p2.y, 2));
 	}
 
 	nudge(v: Vector2D) {
@@ -116,5 +125,16 @@ export class Point {
 		this.y = n.y;
 	}
 
+	affectedBy(g: Point, gravity = 1) {
+		let distance = this.distanceTo(g);
+		const cross = this.vector.direction(g.vector);
+		// p.nudge(cross.scale(1));
+		// don't fly too fast
+		if (distance < g.radius) {
+			distance /= 10;
+		}
+		this.nudge(cross.unit.scale(gravity/Math.sqrt(distance)));
+		return distance;
+	}
 }
 

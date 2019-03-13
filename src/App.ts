@@ -28,7 +28,7 @@ export class App {
 		const dt = this.t - this.prevT;
 		// this.c.fade(5);
 		for (let p of this.pixels) {
-			p.draw(canvas);
+			p.draw3D(canvas);
 			p.next(this.t, dt);
 		}
 		// let p = this.pixels[0];

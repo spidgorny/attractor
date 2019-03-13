@@ -21,7 +21,7 @@ var App = /** @class */ (function () {
         // this.c.fade(5);
         for (var _i = 0, _a = this.pixels; _i < _a.length; _i++) {
             var p = _a[_i];
-            p.draw(canvas);
+            p.draw3D(canvas);
             p.next(this.t, dt);
         }
         // let p = this.pixels[0];
