@@ -1,13 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Vector2D_1 = require("./Vector2D");
 var Point = /** @class */ (function () {
     function Point(width, height) {
+        this.radius = 2;
+        this.speed = new Vector2D_1.Vector2D(Math.random() * 1, Math.random() * 1);
         this.width = width;
         this.height = height;
         this.init();
     }
     Point.prototype.init = function () {
-        var radius = 50;
+        var radius = this.width;
         this.x = this.x1 = Math.random() * radius - radius / 2;
         this.y = this.y1 = Math.random() * radius - radius / 2;
         this.z = this.z1 = Math.random() * radius - radius / 2;
@@ -16,8 +19,8 @@ var Point = /** @class */ (function () {
         this.b = 128 + Math.random() * 128;
     };
     Point.prototype.draw = function (canvas) {
-        var zoom = 5;
-        canvas.setParticle(this.x / (10 / this.z) * zoom, this.y / (10 / this.z) * zoom, this.r, this.g, this.b, 1);
+        var zoom = 1;
+        canvas.setParticle(this.x / (10 / this.z) * zoom, this.y / (10 / this.z) * zoom, this.r, this.g, this.b, 1, this.radius);
     };
     Point.prototype.next = function (t, dt) {
         // let {x, y} = this.func1(this.x1, this.y1, t*100);
@@ -65,6 +68,24 @@ var Point = /** @class */ (function () {
             y: y + (x * (r - z) - y) * t,
             z: z + (x * y - b * z) * t
         };
+    };
+    Object.defineProperty(Point.prototype, "vector", {
+        get: function () {
+            return new Vector2D_1.Vector2D(this.x, this.y);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Point.prototype.distanceTo = function (p2) {
+        return Math.sqrt((this.x - p2.x) + (this.y + p2.y));
+    };
+    Point.prototype.nudge = function (v) {
+        this.speed = this.speed.add(v);
+    };
+    Point.prototype.applySpeed = function (dt) {
+        var n = this.vector.add(this.speed.scale(dt));
+        this.x = n.x;
+        this.y = n.y;
     };
     return Point;
 }());

@@ -52,11 +52,12 @@ var CanvasPlus = /** @class */ (function () {
         }
         this.afterFrame();
     };
-    CanvasPlus.prototype.setParticle = function (x, y, r, g, b, a) {
+    CanvasPlus.prototype.setParticle = function (x, y, r, g, b, a, radius) {
+        if (radius === void 0) { radius = 2; }
         this.c.beginPath();
         this.c.fillStyle = "rgba(" + r + "," + g + "," + b + "," + a + ")";
         this.c.strokeStyle = "rgba(" + r + "," + g + "," + b + "," + a + ")";
-        this.c.arc(this.width / 2 + x, this.height / 2 + y, 2, 0, 2 * Math.PI);
+        this.c.arc(this.width / 2 + x, this.height / 2 + y, radius, 0, 2 * Math.PI);
         this.c.fill();
     };
     return CanvasPlus;

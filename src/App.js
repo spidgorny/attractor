@@ -12,7 +12,7 @@ var App = /** @class */ (function () {
         // this.circle = new CircleGenerator();
     }
     App.prototype.start = function () {
-        for (var i = 0; i < 1000; i++) {
+        for (var i = 0; i < 2000; i++) {
             this.pixels.push(new Point_1.Point(this.c.width, this.c.height));
         }
     };
@@ -28,6 +28,7 @@ var App = /** @class */ (function () {
         // this.debug.innerHTML = `t: ${this.t}<br />${this.circle}`;
     };
     App.prototype.loop = function () {
+        var startTime = new Date();
         // this.c.beforeFrame();
         this.c.reset();
         this.frame(this.c);
@@ -36,6 +37,7 @@ var App = /** @class */ (function () {
         // this.circle.frame(this.t, this.t - this.prevT);
         this.prevT = this.t;
         this.t += 0.01;
+        this.debug.innerText = (new Date().getTime() - startTime.getTime()).toFixed(2) + 'ms';
         // setTimeout(this.loop.bind(this), 1);
         requestAnimationFrame(this.loop.bind(this));
     };

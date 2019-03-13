@@ -1,17 +1,25 @@
 import {CanvasPlus} from "./CanvasPlus";
+import {Vector2D} from "./Vector2D";
 
 export class Point {
 	width: number;
 	height: number;
+
+	radius = 2;
+
 	x1: number;
 	y1: number;
 	z1: number;
+
 	x: number;
 	y: number;
 	z: number;
+
 	r: number;
 	g: number;
 	b: number;
+
+	speed: Vector2D = new Vector2D(Math.random() * 1, Math.random() * 1);
 
 	constructor(width, height) {
 		this.width = width;
@@ -20,7 +28,7 @@ export class Point {
 	}
 
 	init() {
-		const radius = 50;
+		const radius = this.width;
 		this.x = this.x1 = Math.random() * radius - radius/2;
 		this.y = this.y1 = Math.random() * radius - radius/2;
 		this.z = this.z1 = Math.random() * radius - radius/2;
@@ -30,11 +38,11 @@ export class Point {
 	}
 
 	draw(canvas: CanvasPlus) {
-		const zoom = 5;
+		const zoom = 1;
 		canvas.setParticle(
 			this.x/(10/this.z)*zoom,
 			this.y/(10/this.z)*zoom,
-			this.r, this.g, this.b, 1
+			this.r, this.g, this.b, 1, this.radius
 		);
 	}
 
@@ -88,6 +96,24 @@ export class Point {
 			y: y + (x*(r-z)-y)*t,
 			z: z + (x*y - b*z)*t
 		};
+	}
+
+	get vector() {
+		return new Vector2D(this.x, this.y);
+	}
+
+	distanceTo(p2: Point) {
+		return Math.sqrt((this.x - p2.x) + (this.y + p2.y));
+	}
+
+	nudge(v: Vector2D) {
+		this.speed = this.speed.add(v);
+	}
+
+	applySpeed(dt) {
+		const n = this.vector.add(this.speed.scale(dt));
+		this.x = n.x;
+		this.y = n.y;
 	}
 
 }

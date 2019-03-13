@@ -19,7 +19,7 @@ export class App {
 	}
 
 	start() {
-		for (let i = 0; i < 1000; i++) {
+		for (let i = 0; i < 2000; i++) {
 			this.pixels.push(new Point(this.c.width, this.c.height));
 		}
 	}
@@ -36,6 +36,7 @@ export class App {
 	}
 
 	loop() {
+		const startTime = new Date();
 		// this.c.beforeFrame();
 		this.c.reset();
 		this.frame(this.c);
@@ -47,6 +48,7 @@ export class App {
 		this.prevT = this.t;
 		this.t += 0.01;
 
+		this.debug.innerText = (new Date().getTime() - startTime.getTime()).toFixed(2)+'ms';
 		// setTimeout(this.loop.bind(this), 1);
 		requestAnimationFrame(this.loop.bind(this));
 	}

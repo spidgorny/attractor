@@ -64,11 +64,11 @@ export class CanvasPlus {
 		this.afterFrame();
 	}
 
-	setParticle(x, y, r, g, b, a) {
+	setParticle(x, y, r, g, b, a, radius = 2) {
 		this.c.beginPath();
 		this.c.fillStyle = `rgba(${r},${g},${b},${a})`;
 		this.c.strokeStyle = `rgba(${r},${g},${b},${a})`;
-		this.c.arc(this.width/2+x, this.height/2+y, 2, 0, 2*Math.PI);
+		this.c.arc(this.width/2+x, this.height/2+y, radius, 0, 2*Math.PI);
 		this.c.fill();
 	}
 
