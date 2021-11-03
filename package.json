@@ -1,30 +1,30 @@
 {
-  "name": "attractor",
-  "version": "1.0.0",
-  "description": "Inspired by \r https://www.youtube.com/watch?v=fDSIRXmnVvk&list=LLbupuN9hGWstuQUazSgcAQQ&index=5",
-  "main": "src/attractor.js",
-  "scripts": {
-    "start": "webpack-dev-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/spidgorny/attractor.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/spidgorny/attractor/issues"
-  },
-  "homepage": "https://github.com/spidgorny/attractor#readme",
-  "devDependencies": {
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.1"
-  },
-  "dependencies": {
-    "fps-indicator": "^1.3.0",
-    "strip-ansi": "^5.1.0"
-  }
+	"name": "attractor",
+	"version": "1.0.0",
+	"description": "Inspired by \r https://www.youtube.com/watch?v=fDSIRXmnVvk&list=LLbupuN9hGWstuQUazSgcAQQ&index=5",
+	"main": "src/attractor.js",
+	"scripts": {
+		"start": "webpack serve",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/spidgorny/attractor.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/spidgorny/attractor/issues"
+	},
+	"homepage": "https://github.com/spidgorny/attractor#readme",
+	"devDependencies": {
+		"webpack": "^5.61.0",
+		"webpack-cli": "^4.9.1",
+		"webpack-dev-server": "^4.4.0"
+	},
+	"dependencies": {
+		"fps-indicator": "^1.3.0",
+		"strip-ansi": "^7.0.1"
+	}
 }

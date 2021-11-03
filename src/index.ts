@@ -1,7 +1,7 @@
 import {App} from './App';
 import * as createFps from "fps-indicator";
 
-createFps();
+// createFps();
 
 const app = new App();
 app.start();

@@ -1,4 +1,4 @@
-import {CanvasPlus} from "./CanvasPlus";
+import {CanvasPlus} from "./CanvasPlus.js";
 
 export class CircleGenerator {
 

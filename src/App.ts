@@ -1,6 +1,6 @@
-import {Point} from "./Point";
-import {CanvasPlus} from "./CanvasPlus";
-import {CircleGenerator} from "./CircleGenerator";
+import {Point} from "./Point.js";
+import {CanvasPlus} from "./CanvasPlus.js";
+import {CircleGenerator} from "./CircleGenerator.js";
 
 export class App {
 
@@ -19,7 +19,7 @@ export class App {
 	}
 
 	start() {
-		for (let i = 0; i < 2000; i++) {
+		for (let i = 0; i < 1000; i++) {
 			this.pixels.push(new Point(this.c.width, this.c.height));
 		}
 	}
@@ -48,7 +48,8 @@ export class App {
 		this.prevT = this.t;
 		this.t += 0.01;
 
-		this.debug.innerText = (new Date().getTime() - startTime.getTime()).toFixed(2)+'ms';
+		let dTime = new Date().getTime() - startTime.getTime();
+		this.debug.innerText = dTime.toFixed(2) + 'ms ' + (1000 / dTime).toFixed(2) + ' fps';
 		// setTimeout(this.loop.bind(this), 1);
 		requestAnimationFrame(this.loop.bind(this));
 	}

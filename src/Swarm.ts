@@ -1,6 +1,6 @@
-import {Point} from "./Point";
-import {CanvasPlus} from "./CanvasPlus";
-import {Vector2D} from "./Vector2D";
+import {Point} from "./Point.js";
+import {CanvasPlus} from "./CanvasPlus.js";
+import {Vector2D} from "./Vector2D.js";
 
 export class Swarm {
 
@@ -83,7 +83,8 @@ export class Swarm {
             g.applySpeed(dt / 10000);
         }
 
-        for (let gIndex in this.planets) {
+        for (let sIndex in this.planets) {
+            let gIndex = parseInt(sIndex);
             const g = this.planets[gIndex];
             const xFar = Math.abs(g.x) > this.canvas.width * 2;
             const yFar = Math.abs(g.y) > this.canvas.height * 2;
