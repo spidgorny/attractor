@@ -19,7 +19,7 @@ export class App {
 	}
 
 	start() {
-		for (let i = 0; i < 1000; i++) {
+		for (let i = 0; i < 3000; i++) {
 			this.pixels.push(new Point(this.c.width, this.c.height));
 		}
 	}
@@ -46,9 +46,10 @@ export class App {
 		// this.circle.frame(this.t, this.t - this.prevT);
 
 		this.prevT = this.t;
-		this.t += 0.01;
 
 		let dTime = new Date().getTime() - startTime.getTime();
+		this.t += dTime * 0.001;
+
 		this.debug.innerText = dTime.toFixed(2) + 'ms ' + (1000 / dTime).toFixed(2) + ' fps';
 		// setTimeout(this.loop.bind(this), 1);
 		requestAnimationFrame(this.loop.bind(this));

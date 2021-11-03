@@ -29,9 +29,10 @@ export class Point {
 
 	init() {
 		const radius = this.width;
-		this.x = this.x1 = Math.random() * radius - radius/2;
-		this.y = this.y1 = Math.random() * radius - radius/2;
-		this.z = this.z1 = Math.random() * radius - radius/2;
+		this.x = this.x1 = Math.random() * radius - radius / 2;
+		this.y = this.y1 = Math.random() * radius - radius / 2;
+		this.z = this.z1 = Math.random() * radius - radius / 2;
+		// not too dark
 		this.r = 128 + Math.random() * 128;
 		this.g = 128 + Math.random() * 128;
 		this.b = 128 + Math.random() * 128;
@@ -49,8 +50,8 @@ export class Point {
 	draw3D(canvas: CanvasPlus) {
 		const zoom = 1;
 		canvas.setParticle(
-			this.x/(10/this.z)*zoom,
-			this.y/(10/this.z)*zoom,
+			this.x / (10 / this.z) * zoom,
+			this.y / (10 / this.z) * zoom,
 			this.r, this.g, this.b, 1, this.radius
 		);
 	}
@@ -60,7 +61,7 @@ export class Point {
 		// let {x, y} = this.func2(this.x1, this.y1, t*10);
 		// let {x, y} = this.func3(this.x, this.y, t);
 		// let {x, y, z} = this.funcL(this.x1, this.y1, this.z1, t);
-		let {x, y, z} = this.funcL(this.x, this.y, this.z, t/10000);
+		let {x, y, z} = this.funcL(this.x, this.y, this.z, t / 10000);
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -90,8 +91,8 @@ export class Point {
 
 	func3(x, y, t) {
 		return {
-			x: x+t,
-			y: y+t,
+			x: x + t,
+			y: y + t,
 			z: 0,
 		};
 	}
@@ -99,11 +100,11 @@ export class Point {
 	funcL(x, y, z, t) {
 		const s = 10;
 		const r = 28;
-		const b = 8/3;
+		const b = 8 / 3;
 		return {
-			x: x + s*(y - x)*t,
-			y: y + (x*(r-z)-y)*t,
-			z: z + (x*y - b*z)*t
+			x: x + s * (y - x) * t,
+			y: y + (x * (r - z) - y) * t,
+			z: z + (x * y - b * z) * t
 		};
 	}
 
@@ -133,7 +134,7 @@ export class Point {
 		if (distance < g.radius) {
 			distance /= 10;
 		}
-		this.nudge(cross.unit.scale(gravity/Math.sqrt(distance)));
+		this.nudge(cross.unit.scale(gravity / Math.sqrt(distance)));
 		return distance;
 	}
 }
