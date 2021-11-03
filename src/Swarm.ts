@@ -1,6 +1,7 @@
 import {Point} from "./Point.js";
 import {CanvasPlus} from "./CanvasPlus.js";
 import {Vector2D} from "./Vector2D.js";
+import {oncePerSecond} from "./lib/once-per-second";
 
 export class Swarm {
 
@@ -107,19 +108,10 @@ export class Swarm {
 			this.setSize -= 1;
 			this.remove(1);
 		}
-		this.oncePerSecond(() =>
+
+		oncePerSecond(() =>
 			console.log(this.setSize, dur)
 		)
-	}
-
-	lastSecond = Math.round(new Date().getTime() / 1000);
-
-	oncePerSecond(callback) {
-		const newSecond = Math.round(new Date().getTime() / 1000);
-		if (newSecond != this.lastSecond) {
-			callback();
-		}
-		this.lastSecond = newSecond;
 	}
 
 }

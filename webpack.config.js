@@ -2,8 +2,8 @@ const path = require("path");
 module.exports = {
 	mode: 'development',
 	entry: {
-		main: './tsout/index.js',
-		gravity: './tsout/gravity.js'
+		main: './tsout/src/index.js',
+		gravity: './tsout/src/gravity.js'
 	},
 	devServer: {
 		port: 3000,
