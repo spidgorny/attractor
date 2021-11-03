@@ -1,4 +1,4 @@
-import {MoveDirection} from "../src/MoveDirection";
+import {MoveDirection} from "../src/MoveDirection.js";
 
 function testMe() {
 	const md = new MoveDirection();

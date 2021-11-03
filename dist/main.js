@@ -310,14 +310,58 @@ eval("var logLevel = \"info\";\n\nfunction dummy() {}\n\nfunction shouldLog(leve
 
 /***/ }),
 
-/***/ "./tsout/index.js":
-/*!************************!*\
-  !*** ./tsout/index.js ***!
-  \************************/
+/***/ "./tsout/src/App.js":
+/*!**************************!*\
+  !*** ./tsout/src/App.js ***!
+  \**************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
-eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nconst App_1 = __webpack_require__(Object(function webpackMissingModule() { var e = new Error(\"Cannot find module './App'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));\r\n// createFps();\r\nconst app = new App_1.App();\r\napp.start();\r\napp.loop();\r\n\n\n//# sourceURL=webpack://attractor/./tsout/index.js?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.App = void 0;\r\nconst Point_js_1 = __webpack_require__(/*! ./Point.js */ \"./tsout/src/Point.js\");\r\nconst CanvasPlus_js_1 = __webpack_require__(/*! ./CanvasPlus.js */ \"./tsout/src/CanvasPlus.js\");\r\nclass App {\r\n    c;\r\n    t = 1;\r\n    prevT;\r\n    pixels = [];\r\n    debug;\r\n    circle;\r\n    constructor() {\r\n        this.c = new CanvasPlus_js_1.CanvasPlus();\r\n        this.c.canvas.addEventListener('click', this.click.bind(this));\r\n        this.debug = document.querySelector('div#debug');\r\n        // this.circle = new CircleGenerator();\r\n    }\r\n    start() {\r\n        for (let i = 0; i < 3000; i++) {\r\n            this.pixels.push(new Point_js_1.Point(this.c.width, this.c.height));\r\n        }\r\n    }\r\n    frame(canvas) {\r\n        const dt = this.t - this.prevT;\r\n        // this.c.fade(5);\r\n        for (let p of this.pixels) {\r\n            p.draw3D(canvas);\r\n            p.next(this.t, dt);\r\n        }\r\n        // let p = this.pixels[0];\r\n        // this.debug.innerHTML = `t: ${this.t}<br />${this.circle}`;\r\n    }\r\n    loop() {\r\n        const startTime = new Date();\r\n        // this.c.beforeFrame();\r\n        this.c.reset();\r\n        this.frame(this.c);\r\n        // this.circle.draw(this.c);\r\n        // this.c.afterFrame();\r\n        // this.circle.frame(this.t, this.t - this.prevT);\r\n        this.prevT = this.t;\r\n        let dTime = new Date().getTime() - startTime.getTime();\r\n        this.t += dTime * 0.001;\r\n        this.debug.innerText = dTime.toFixed(2) + 'ms ' + (1000 / dTime).toFixed(2) + ' fps';\r\n        // setTimeout(this.loop.bind(this), 1);\r\n        requestAnimationFrame(this.loop.bind(this));\r\n    }\r\n    click(e) {\r\n        //console.log(e);\r\n        this.c.setParticle(e.clientX, e.clientY, 255, 255, 255, 1);\r\n    }\r\n}\r\nexports.App = App;\r\n\n\n//# sourceURL=webpack://attractor/./tsout/src/App.js?");
+
+/***/ }),
+
+/***/ "./tsout/src/CanvasPlus.js":
+/*!*********************************!*\
+  !*** ./tsout/src/CanvasPlus.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.CanvasPlus = void 0;\r\nconst Vector2D_js_1 = __webpack_require__(/*! ./Vector2D.js */ \"./tsout/src/Vector2D.js\");\r\nclass CanvasPlus {\r\n    canvas;\r\n    width;\r\n    height;\r\n    c;\r\n    imageData;\r\n    shift;\r\n    constructor() {\r\n        this.canvas = document.querySelector('canvas');\r\n        this.width = this.canvas.width = this.canvas.clientWidth;\r\n        this.height = this.canvas.height = this.canvas.clientHeight;\r\n        this.shift = new Vector2D_js_1.Vector2D();\r\n        setTimeout(() => this.shift.x += 500, 5000); // test\r\n        this.c = this.canvas.getContext('2d');\r\n        this.reset();\r\n    }\r\n    reset() {\r\n        this.c.fillStyle = '#000000';\r\n        this.c.fillRect(0, 0, this.width, this.height);\r\n    }\r\n    drawTestCircle() {\r\n        this.c.beginPath();\r\n        this.c.fillStyle = '#ffffff';\r\n        this.c.strokeStyle = '#ffffff';\r\n        this.c.arc(this.width / 10, this.height / 10, this.width / 10, 0, 2 * Math.PI);\r\n        this.c.stroke();\r\n    }\r\n    beforeFrame() {\r\n        this.imageData = this.c.getImageData(0, 0, this.width, this.height);\r\n    }\r\n    afterFrame() {\r\n        this.c.putImageData(this.imageData, 0, 0);\r\n    }\r\n    setPixel(x, y, r, g, b, a) {\r\n        let index = (x + y * this.imageData.width) * 4;\r\n        this.imageData.data[index + 0] = r;\r\n        this.imageData.data[index + 1] = g;\r\n        this.imageData.data[index + 2] = b;\r\n        this.imageData.data[index + 3] = a;\r\n    }\r\n    getPixel(x, y) {\r\n        let index = (x + y * this.imageData.width) * 4;\r\n        return {\r\n            r: this.imageData.data[index + 0],\r\n            g: this.imageData.data[index + 1],\r\n            b: this.imageData.data[index + 2],\r\n            a: this.imageData.data[index + 3],\r\n        };\r\n    }\r\n    fade(speed = 1) {\r\n        this.beforeFrame();\r\n        for (let x = 0; x < this.width; x++) {\r\n            for (let y = 0; y < this.height; y++) {\r\n                let { r, g, b, a } = this.getPixel(x, y);\r\n                this.setPixel(this.shift.x + x, this.shift.y + y, r - speed, g - speed, b - speed, a + 1);\r\n            }\r\n        }\r\n        this.afterFrame();\r\n    }\r\n    setParticle(x, y, r, g, b, a, radius = 2) {\r\n        this.c.beginPath();\r\n        this.c.fillStyle = `rgba(${r},${g},${b},${a})`;\r\n        this.c.strokeStyle = `rgba(${r},${g},${b},${a})`;\r\n        this.c.arc(this.shift.x + this.width / 2 + x, this.shift.y + this.height / 2 + y, radius, 0, 2 * Math.PI);\r\n        this.c.fill();\r\n    }\r\n}\r\nexports.CanvasPlus = CanvasPlus;\r\n\n\n//# sourceURL=webpack://attractor/./tsout/src/CanvasPlus.js?");
+
+/***/ }),
+
+/***/ "./tsout/src/Point.js":
+/*!****************************!*\
+  !*** ./tsout/src/Point.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.Point = void 0;\r\nconst Vector2D_js_1 = __webpack_require__(/*! ./Vector2D.js */ \"./tsout/src/Vector2D.js\");\r\nclass Point {\r\n    width;\r\n    height;\r\n    radius = 2;\r\n    x1;\r\n    y1;\r\n    z1;\r\n    x;\r\n    y;\r\n    z;\r\n    r;\r\n    g;\r\n    b;\r\n    speed = new Vector2D_js_1.Vector2D(Math.random() * 1, Math.random() * 1);\r\n    constructor(width, height) {\r\n        this.width = width;\r\n        this.height = height;\r\n        this.init();\r\n    }\r\n    init() {\r\n        const radius = this.width;\r\n        this.x = this.x1 = Math.random() * radius - radius / 2;\r\n        this.y = this.y1 = Math.random() * radius - radius / 2;\r\n        this.z = this.z1 = Math.random() * radius - radius / 2;\r\n        // not too dark\r\n        this.r = 128 + Math.random() * 128;\r\n        this.g = 128 + Math.random() * 128;\r\n        this.b = 128 + Math.random() * 128;\r\n    }\r\n    draw(canvas) {\r\n        canvas.setParticle(this.x, this.y, this.r, this.g, this.b, 1, this.radius);\r\n    }\r\n    draw3D(canvas) {\r\n        const zoom = 1;\r\n        canvas.setParticle(this.x / (10 / this.z) * zoom, this.y / (10 / this.z) * zoom, this.r, this.g, this.b, 1, this.radius);\r\n    }\r\n    next(t, dt) {\r\n        // let {x, y} = this.func1(this.x1, this.y1, t*100);\r\n        // let {x, y} = this.func2(this.x1, this.y1, t*10);\r\n        // let {x, y} = this.func3(this.x, this.y, t);\r\n        // let {x, y, z} = this.funcL(this.x1, this.y1, this.z1, t);\r\n        let { x, y, z } = this.funcL(this.x, this.y, this.z, t / 10000);\r\n        this.x = x;\r\n        this.y = y;\r\n        this.z = z;\r\n        if (Math.abs(this.x) > this.width) {\r\n            this.init();\r\n        }\r\n        if (Math.abs(this.y) > this.height) {\r\n            this.init();\r\n        }\r\n    }\r\n    func1(x, y, t) {\r\n        return {\r\n            x: x ^ 2 + x * t + y * t - x,\r\n            y: -y ^ 2 - t ^ 2 - x * y - x * t - y * t - y,\r\n            z: 0,\r\n        };\r\n    }\r\n    func2(x, y, t) {\r\n        return {\r\n            x: -y ^ 2 - t ^ 2 + t * x,\r\n            y: y * t + x * y,\r\n            z: 0,\r\n        };\r\n    }\r\n    func3(x, y, t) {\r\n        return {\r\n            x: x + t,\r\n            y: y + t,\r\n            z: 0,\r\n        };\r\n    }\r\n    funcL(x, y, z, t) {\r\n        const s = 10;\r\n        const r = 28;\r\n        const b = 8 / 3;\r\n        return {\r\n            x: x + s * (y - x) * t,\r\n            y: y + (x * (r - z) - y) * t,\r\n            z: z + (x * y - b * z) * t\r\n        };\r\n    }\r\n    get vector() {\r\n        return new Vector2D_js_1.Vector2D(this.x, this.y);\r\n    }\r\n    distanceTo(p2) {\r\n        return Math.sqrt(Math.pow(this.x - p2.x, 2) + Math.pow(this.y - p2.y, 2));\r\n    }\r\n    nudge(v) {\r\n        this.speed = this.speed.add(v);\r\n    }\r\n    applySpeed(dt) {\r\n        const n = this.vector.add(this.speed.scale(dt));\r\n        this.x = n.x;\r\n        this.y = n.y;\r\n    }\r\n    affectedBy(g, gravity = 1) {\r\n        let distance = this.distanceTo(g);\r\n        const cross = this.vector.direction(g.vector);\r\n        // p.nudge(cross.scale(1));\r\n        // don't fly too fast\r\n        if (distance < g.radius) {\r\n            distance /= 10;\r\n        }\r\n        this.nudge(cross.unit.scale(gravity / Math.sqrt(distance)));\r\n        return distance;\r\n    }\r\n}\r\nexports.Point = Point;\r\n\n\n//# sourceURL=webpack://attractor/./tsout/src/Point.js?");
+
+/***/ }),
+
+/***/ "./tsout/src/Vector2D.js":
+/*!*******************************!*\
+  !*** ./tsout/src/Vector2D.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+eval("\r\n// https://evanw.github.io/lightgl.js/docs/vector.html\r\n// http://victorjs.org/#cross\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.Vector2D = void 0;\r\nclass Vector2D {\r\n    x;\r\n    y;\r\n    constructor(x = 0, y = 0) {\r\n        this.x = x;\r\n        this.y = y;\r\n    }\r\n    add(v) {\r\n        if (v instanceof Vector2D)\r\n            return new Vector2D(this.x + v.x, this.y + v.y);\r\n        else\r\n            return new Vector2D(this.x + v, this.y + v);\r\n    }\r\n    multiply(v) {\r\n        return new Vector2D(this.x * v.x, this.y * v.y);\r\n    }\r\n    scale(v) {\r\n        return new Vector2D(this.x * v, this.y * v);\r\n    }\r\n    direction(vec2) {\r\n        return new Vector2D(vec2.x - this.x, vec2.y - this.y);\r\n    }\r\n    dot(v) {\r\n        return this.x * v.x + this.y * v.y;\r\n    }\r\n    get length() {\r\n        return Math.sqrt(this.dot(this));\r\n    }\r\n    get unit() {\r\n        return this.scale(1 / this.length);\r\n    }\r\n    set(x, y) {\r\n        this.x = x;\r\n        this.y = y;\r\n        return this;\r\n    }\r\n}\r\nexports.Vector2D = Vector2D;\r\n\n\n//# sourceURL=webpack://attractor/./tsout/src/Vector2D.js?");
+
+/***/ }),
+
+/***/ "./tsout/src/index.js":
+/*!****************************!*\
+  !*** ./tsout/src/index.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nconst App_1 = __webpack_require__(/*! ./App */ \"./tsout/src/App.js\");\r\n// createFps();\r\nconst app = new App_1.App();\r\napp.start();\r\napp.loop();\r\n\n\n//# sourceURL=webpack://attractor/./tsout/src/index.js?");
 
 /***/ })
 
@@ -409,7 +453,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("3998fe02591c5ad11842")
+/******/ 		__webpack_require__.h = () => ("280b94b2f00a22f442b3")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -1414,7 +1458,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 /******/ 	// Load entry module and return exports
 /******/ 	__webpack_require__("./node_modules/webpack-dev-server/client/index.js?protocol=wss%3A&hostname=127.0.0.1&port=3000&pathname=%2Fws&logging=info&reconnect=10");
 /******/ 	__webpack_require__("./node_modules/webpack/hot/dev-server.js");
-/******/ 	var __webpack_exports__ = __webpack_require__("./tsout/index.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./tsout/src/index.js");
 /******/ 	
 /******/ })()
 ;

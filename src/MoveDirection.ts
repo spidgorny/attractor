@@ -1,4 +1,4 @@
-import {Vector2D} from "./Vector2D";
+import {Vector2D} from "./Vector2D.js";
 
 export class MoveDirection {
 	current: Vector2D;

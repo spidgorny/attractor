@@ -109,9 +109,9 @@ export class Swarm {
 			this.remove(1);
 		}
 
-		oncePerSecond(() =>
-			console.log(this.setSize, dur)
-		)
+		// oncePerSecond(() =>
+		// 	console.log(this.setSize, dur)
+		// )
 	}
 
 }

@@ -1,8 +1,7 @@
-import {CanvasPlus} from "./CanvasPlus";
-import * as createFps from "fps-indicator";
-import {Swarm} from "./Swarm";
-import {AvgFps} from "./avg-fps";
-import {oncePerSecond} from "./lib/once-per-second";
+import {CanvasPlus} from "./CanvasPlus.js";
+import {Swarm} from "./Swarm.js";
+import {AvgFps} from "./avg-fps.js";
+import {oncePerSecond} from "./lib/once-per-second.js";
 
 // createFps();
 
@@ -26,6 +25,7 @@ class Gravity {
 
 	start() {
 		this.frameDone = performance.now();
+		this.loop();
 	}
 
 	loop() {
@@ -37,6 +37,7 @@ class Gravity {
 
 		this.fps.loop();
 		oncePerSecond(() => {
+			console.log(this.fps.getFPS() + ' fps');
 			this.debug.innerText = this.fps.getFrameDuration() + 'ms ' + this.fps.getFPS() + ' fps';
 		});
 
@@ -50,4 +51,5 @@ class Gravity {
 
 }
 
+console.log('new gravity start')
 new Gravity().start();
