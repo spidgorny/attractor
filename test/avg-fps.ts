@@ -1,6 +1,6 @@
-import {AvgFps} from "../src/avg-fps.js";
-import {runDuration} from "../src/lib/run-duration.js";
-import {sleep} from "../src/lib/sleep.js";
+import {AvgFps} from "../src/gravity-attractor/avg-fps";
+import {runDuration} from "../src/lib/run-duration";
+import {sleep} from "../src/lib/sleep";
 
 // must be around 100ms, 10 fps
 async function testMe() {

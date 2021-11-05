@@ -1,4 +1,4 @@
-import {MoveDirection} from "../src/MoveDirection.js";
+import {MoveDirection} from "../src/gravity-attractor/MoveDirection.ts";
 
 function testMe() {
 	const md = new MoveDirection();

@@ -1,4 +1,4 @@
-import {App} from './App';
+import {App} from './gravity-attractor/App';
 import * as createFps from "fps-indicator";
 
 // createFps();

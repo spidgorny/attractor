@@ -1,4 +1,4 @@
-import {oncePerSecond} from "./lib/once-per-second.js";
+import {oncePerSecond} from "../lib/once-per-second.js";
 
 export class AvgFps {
 
