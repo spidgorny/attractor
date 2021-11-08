@@ -4,7 +4,8 @@ module.exports = {
 	entry: {
 		main: './src/index.ts',
 		gravity: './src/gravity.ts',
-		"three-box": './src/three-box.ts'
+		"three-box": './src/three-box.ts',
+		"three-box-dots": './src/three-box-dots.ts',
 	},
 	module: {
 		rules: [
