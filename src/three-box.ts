@@ -1,7 +1,9 @@
-import * as THREE from 'three/build/three.module.js';
+import * as THREE from 'three';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 
 let camera, scene, renderer;
 let geometry, material, mesh;
+let controls;
 
 init();
 
@@ -22,12 +24,14 @@ function init() {
 	renderer.setAnimationLoop(animation);
 	document.body.appendChild(renderer.domElement);
 
+	controls = new OrbitControls(camera, renderer.domElement);
+	controls.update();
 }
 
 function animation(time) {
-
 	mesh.rotation.x = time / 2000;
 	mesh.rotation.y = time / 1000;
 
+	controls.update();
 	renderer.render(scene, camera);
 }
