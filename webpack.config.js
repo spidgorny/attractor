@@ -2,8 +2,21 @@ const path = require("path");
 module.exports = {
 	mode: 'development',
 	entry: {
-		main: './tsout/src/index.js',
-		gravity: './tsout/src/gravity.js'
+		main: './src/index.ts',
+		gravity: './src/gravity.ts',
+		"three-box": './src/three-box.ts'
+	},
+	module: {
+		rules: [
+			{
+				test: /\.tsx?$/,
+				use: 'ts-loader',
+				exclude: /node_modules/,
+			},
+		],
+	},
+	resolve: {
+		extensions: ['.tsx', '.ts', '.js'],
 	},
 	devServer: {
 		port: 3000,
@@ -13,7 +26,7 @@ module.exports = {
 		compress: true,
 		http2: true,
 		magicHtml: true,
-		watchFiles: ['tsout/**/*.ts'],
+		watchFiles: ['src/**/*.ts', 'test/**/*.ts'],
 		static: {
 			directory: path.join(__dirname, '.'),
 			serveIndex: {

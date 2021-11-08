@@ -1,6 +1,6 @@
-import {Point} from "./Point.js";
-import {CanvasPlus} from "./CanvasPlus.js";
-import {CircleGenerator} from "./CircleGenerator.js";
+import {Point} from "./Point";
+import {CanvasPlus} from "./CanvasPlus";
+import {CircleGenerator} from "./CircleGenerator";
 
 export class App {
 

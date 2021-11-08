@@ -1,6 +1,6 @@
-import {Point} from "./Point.js";
-import {CanvasPlus} from "./CanvasPlus.js";
-import {Vector2D} from "./Vector2D.js";
+import {Point} from "./Point";
+import {CanvasPlus} from "./CanvasPlus";
+import {Vector2D} from "./Vector2D";
 import {oncePerSecond} from "../lib/once-per-second";
 
 export class Swarm {

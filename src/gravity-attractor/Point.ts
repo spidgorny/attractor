@@ -1,5 +1,5 @@
-import {CanvasPlus} from "./CanvasPlus.js";
-import {Vector2D} from "./Vector2D.js";
+import {CanvasPlus} from "./CanvasPlus";
+import {Vector2D} from "./Vector2D";
 
 export class Point {
 	width: number;
